@@ -12,6 +12,16 @@ router.get('/', (req, res) => { // GET all tasks
   });
 });
 
+router.get('/detailed', (req,res) => {
+  Tasks.findTaskDetailed()
+    .then(tasks => {
+      res.status(200).json(tasks)
+    })
+    .catch(err => {
+      res.status(500).json({ message: 'Failed to get task' });
+    });
+})
+
 router.get('/:id', (req, res) => {
   const { id } = req.params;
   Tasks.findById(id)
