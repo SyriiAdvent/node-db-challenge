@@ -51,6 +51,38 @@ router.put('/:id', (req, res) => {
   });
 });
 
+router.get('/:id/resources', (req, res) => { // GET resources by Project ID
+  const { id } = req.params;
+  Projects.findResourcesByProjectId(id)
+  .then(resource => {
+    console.log(resource)
+    if (resource) {
+      res.status(200).json(resource);
+    } else {
+      res.status(404).json({ message: 'Could not find resource with given id.' })
+    }
+  })
+  .catch(err => {
+    res.status(500).json({ message: 'Failed to get resource' });
+  });
+});
+
+router.get('/:id/tasks', (req, res) => { // GET Tasks by Project ID
+  const { id } = req.params;
+  Projects.findTasksByProjectId(id)
+  .then(task => {
+    console.log(task)
+    if (task) {
+      res.status(200).json(task);
+    } else {
+      res.status(404).json({ message: 'Could not find task with given id.' })
+    }
+  })
+  .catch(err => {
+    res.status(500).json({ message: 'Failed to get task' });
+  });
+});
+
 router.delete('/:id', (req, res) => {
   const { id } = req.params;
 
